@@ -1,11 +1,6 @@
-function App() {
-  return (
-    <>
-      <p>
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes";
 
-export default App
+export default function App() {
+  return <RouterProvider router={router} />;
+}

@@ -1,4 +1,4 @@
-import env from "@/env";
+import env from "../env";
 
 const API_BASE = "https://api.pexels.com/v1";
 const { PEXEL_API_KEY } = env;
