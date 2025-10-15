@@ -1,3 +1,4 @@
+import { IPhoto } from "@/types";
 import env from "../env";
 
 const API_BASE = "https://api.pexels.com/v1";
@@ -17,6 +18,18 @@ export async function getPhotos(query?: string, page = 1, perPage = 23) {
 
   if (!response.ok) {
     throw new Error('Failed to fetch photos');
+  }
+
+  return response.json();
+}
+
+export async function getPhotoById(id: string): Promise<IPhoto> {
+  const response = await fetch(`${API_BASE}/photos/${id}`, {
+    headers: { Authorization: PEXEL_API_KEY },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to get photo: ${response.status}`);
   }
 
   return response.json();

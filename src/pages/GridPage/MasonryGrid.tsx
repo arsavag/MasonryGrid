@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useMemo, useRef, useState } from "react";
+import React, { useLayoutEffect, useMemo, useRef, useState, Fragment } from "react";
 import { useScrollVisibility } from "../../hooks/useScrollVisibility";
 import { useMasonryLayout } from "../../hooks/useMasonryLayout";
 
@@ -57,7 +57,7 @@ export default function MasonryGrid({
           height: p.h
         };
         return (
-          <React.Fragment key={item.id}>{item.render(style)}</React.Fragment>
+          <Fragment key={item.id}>{item.render(style)}</Fragment>
         );
       })}
     </div>

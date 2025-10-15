@@ -38,7 +38,7 @@ export default function GridPage() {
 
       <MasonryGridFromPhotos photos={photos} />
       <div ref={infiniteTriggerRef} style={{ height: 1 }} />
-      {loading && <p style={{ textAlign: "center", padding: 16 }}>Loading...</p>}
+      {loading && <p className="loading">Loading...</p>}
     </div>
   )
 }
