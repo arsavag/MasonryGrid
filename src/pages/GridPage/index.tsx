@@ -3,6 +3,8 @@ import { useLoadPhotos } from "../../hooks/useLoadPhotos";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import MasonryGridFromPhotos from "./MasonryGridFromPhotos";
 
+import "./styles.css";
+
 const PER_PAGE = 30;
 
 export default function GridPage() {
@@ -26,18 +28,17 @@ export default function GridPage() {
 
   return (
     <div style={{ padding: 16 }}>
-      <header style={{ display: "flex", gap: 8, marginBottom: 16 }}>
+      <header className="header">
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Поиск фотографий…"
-          style={{ flex: 1, padding: 8, borderRadius: 8 }}
+          placeholder="Search photos..."
         />
       </header>
 
       <MasonryGridFromPhotos photos={photos} />
       <div ref={infiniteTriggerRef} style={{ height: 1 }} />
-      {loading && <p style={{ textAlign: "center", padding: 16 }}>Загрузка…</p>}
+      {loading && <p style={{ textAlign: "center", padding: 16 }}>Loading...</p>}
     </div>
   )
 }

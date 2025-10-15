@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function useVirtualWindow(
+export function useScrollVisibility(
   ref: React.RefObject<HTMLElement>,
   overscan = 600
 ) {

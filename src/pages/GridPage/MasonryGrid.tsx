@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useMemo, useRef, useState } from "react";
-import { useVirtualWindow } from "../../hooks/useVirtualWindow";
+import { useScrollVisibility } from "../../hooks/useScrollVisibility";
 import { useMasonryLayout } from "../../hooks/useMasonryLayout";
 
 export interface MasonryGridItem {
@@ -39,7 +39,7 @@ export default function MasonryGrid({
     gap
   });
 
-  const range = useVirtualWindow(ref as React.RefObject<HTMLElement>, 800);
+  const range = useScrollVisibility(ref as React.RefObject<HTMLElement>, 800);
 
   const visible = useMemo(
     () => positions.filter((p) => p.y + p.h >= range.top && p.y <= range.bottom),
