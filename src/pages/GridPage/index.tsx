@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react"
-import { useLoadPhotos } from "@/hooks/useLoadPhotos";
-import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import { useLoadPhotos } from "../../hooks/useLoadPhotos";
+import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import MasonryGridFromPhotos from "./MasonryGridFromPhotos";
 
 const PER_PAGE = 30;

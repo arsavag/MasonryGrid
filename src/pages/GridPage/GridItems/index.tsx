@@ -1,5 +1,5 @@
 import { useMemo, memo } from "react";
-import { IPhoto } from "@/types";
+import { IPhoto } from "../../../types";
 import PhotoCard from "./PhotoCard";
 
 interface IGridItemsProps {

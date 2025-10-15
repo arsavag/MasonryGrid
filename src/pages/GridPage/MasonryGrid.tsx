@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useMemo, useRef, useState } from "react";
-import { useVirtualWindow } from "@/hooks/useVirtualWindow";
-import { useMasonryLayout } from "@/hooks/useMasonryLayout";
+import { useVirtualWindow } from "../../hooks/useVirtualWindow";
+import { useMasonryLayout } from "../../hooks/useMasonryLayout";
 
 export interface MasonryGridItem {
   id: string | number;

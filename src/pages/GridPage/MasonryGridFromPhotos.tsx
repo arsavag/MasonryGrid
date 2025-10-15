@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import MasonryGrid from "./MasonryGrid";
 import PhotoCard from "./GridItems/PhotoCard";
-import type { IPhoto } from "@/types";
+import type { IPhoto } from "../../types";
 
 interface Props {
   photos: IPhoto[];

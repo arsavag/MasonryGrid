@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { Link } from "react-router-dom";
 
-import "./styles.css";
+import "../styles.css";
 
 interface IPhotoCardProps {
   id: number | string;

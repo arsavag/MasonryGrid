@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
-import { getPhotos } from "@/api/getPhotos";
-import type { IPhoto } from "@/types";
+import { getPhotos } from "../api/getPhotos";
+import type { IPhoto } from "../types";
 
 export function useLoadPhotos(perPage = 30) {
   const [loading, setLoading] = useState(false);
