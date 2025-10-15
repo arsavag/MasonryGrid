@@ -11,7 +11,7 @@ export async function getPhotos(query?: string, page = 1, perPage = 23) {
 
   const response = await fetch(url, {
     headers: {
-      Authorization: 'XzQ7PLNEJM5NH8zla6X0EOenBDGD1eufR8rDwcMedp8sIo7R9FgbF1R6',
+      Authorization: PEXEL_API_KEY,
     },
   });
 
