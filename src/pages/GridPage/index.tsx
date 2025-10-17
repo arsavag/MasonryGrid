@@ -9,24 +9,35 @@ const PER_PAGE = 30;
 
 export default function GridPage() {
   const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(query);
   const [page, setPage] = useState(1);
   const infiniteTriggerRef = useRef<HTMLDivElement | null>(null);
   
   const { photos, loading, hasMore, loadPage } = useLoadPhotos(PER_PAGE);
 
-  const isEmptyResult = !loading && photos.length === 0;
+  useEffect(() => {
+    const id = window.setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 300);
+
+    return () => {
+      window.clearTimeout(id);
+    };
+  }, [query]);
 
   useEffect(() => {
     setPage(1);
-    loadPage(query, 1);
-  }, [query, loadPage]);
+    loadPage(debouncedQuery, 1);
+  }, [debouncedQuery, loadPage]);
 
   useInfiniteScroll(infiniteTriggerRef as React.RefObject<HTMLElement>, () => {
     if (loading || !hasMore) return;
     const next = page + 1;
     setPage(next);
-    loadPage(query, next);
+    loadPage(debouncedQuery, next);
   });
+
+  const isEmptyResult = !loading && photos.length === 0;
 
   return (
     <div style={{ padding: 16 }}>
