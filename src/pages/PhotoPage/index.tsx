@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getPhotoById } from "../api/getPhotos";
-import type { IPhoto } from "../types";
+import { getPhotoById } from "../../api/getPhotos";
+import type { IPhoto } from "../../types";
+
+import "./styles.css";
 
 export default function PhotoPage() {
   const { id } = useParams<{ id: string }>();
@@ -33,7 +35,7 @@ export default function PhotoPage() {
 
   return (
     <div style={{ padding: 24 }}>
-      <Link to="/" style={{ textDecoration: "none", color: "#007aff" }}>
+      <Link to="/" className="back-link">
         Back to gallery
       </Link>
 
@@ -41,14 +43,7 @@ export default function PhotoPage() {
         <img
           src={photo.src?.large2x || photo.src?.large}
           alt={photo.alt || "photo"}
-          style={{
-            width: "100%",
-            maxWidth: 1200,
-            maxHeight: "80vh",
-            objectFit: "contain",
-            borderRadius: 12,
-            boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
-          }}
+          className="photo"
         />
 
         <div style={{ lineHeight: 1.5 }}>
@@ -57,14 +52,7 @@ export default function PhotoPage() {
           </h2>
           <p>
             <strong>Photographer:</strong>{" "}
-            <a
-              href={photo.photographer_url}
-              target="_blank"
-              rel="noreferrer"
-              style={{ color: "#007aff" }}
-            >
-              {photo.photographer}
-            </a>
+            {photo.photographer}
           </p>
         </div>
       </div>

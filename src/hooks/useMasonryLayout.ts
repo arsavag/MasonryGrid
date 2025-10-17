@@ -1,66 +1,75 @@
 import { useMemo } from "react";
-
-export interface MasonryItem {
-  id: string | number;
-  width: number;
-  height: number;
-}
+import { MasonryItem } from "../types";
 
 type Positioned<T extends MasonryItem> = {
   id: T["id"];
   x: number;
   y: number;
-  w: number;
-  h: number;
+  width: number;
+  height: number;
   index: number;
 };
+
+interface MasonryLayoutProps {
+  items: MasonryItem[];
+  containerWidth: number;
+  targetColumnWidth?: number;
+  gap?: number;
+}
 
 export function useMasonryLayout<T extends MasonryItem>({
   items,
   containerWidth,
-  targetColWidth = 260,
+  targetColumnWidth = 260,
   gap = 12
-}: {
-  items: T[];
-  containerWidth: number;
-  targetColWidth?: number;
-  gap?: number;
-}) {
-  const cols = Math.max(
+}: MasonryLayoutProps) {
+  const columnCount = Math.max(
     1,
-    Math.floor((containerWidth + gap) / (targetColWidth + gap))
+    Math.floor((containerWidth + gap) / (targetColumnWidth + gap))
   );
+
   const columnWidth =
-    cols > 0 ? Math.floor((containerWidth - gap * (cols - 1)) / cols) : 0;
+    columnCount > 0
+      ? Math.floor((containerWidth - gap * (columnCount - 1)) / columnCount)
+      : 0;
 
   const { positions, contentHeight } = useMemo(() => {
     if (containerWidth <= 0 || columnWidth <= 0 || items.length === 0) {
       return { positions: [] as Positioned<T>[], contentHeight: 0 };
     }
 
-    const colYs = new Array(cols).fill(0) as number[];
-    const pos: Positioned<T>[] = [];
+    const columnHeights = new Array(columnCount).fill(0) as number[];
+    const positionedItems: Positioned<T>[] = [];
 
     for (let index = 0; index < items.length; index++) {
-      const it = items[index];
-      const scale = columnWidth / Math.max(1, it.width);
-      const h = Math.max(1, Math.round(it.height * scale));
+      const item = items[index];
+      const scale = columnWidth / Math.max(1, item.width);
+      const itemHeight = Math.max(1, Math.round(item.height * scale));
 
-      let minCol = 0;
-      for (let c = 1; c < cols; c++) {
-        if (colYs[c] < colYs[minCol]) minCol = c;
+      let shortestColumn = 0;
+      for (let c = 1; c < columnCount; c++) {
+        if (columnHeights[c] < columnHeights[shortestColumn]) {
+          shortestColumn = c;
+        }
       }
 
-      const x = minCol * (columnWidth + gap);
-      const y = colYs[minCol];
-      colYs[minCol] = y + h + gap;
+      const x = shortestColumn * (columnWidth + gap);
+      const y = columnHeights[shortestColumn];
+      columnHeights[shortestColumn] = y + itemHeight + gap;
 
-      pos.push({ id: it.id, x, y, w: columnWidth, h, index });
+      positionedItems.push({
+        id: item.id,
+        x,
+        y,
+        width: columnWidth,
+        height: itemHeight,
+        index
+      });
     }
 
-    const contentHeight = Math.max(0, ...colYs) - gap;
-    return { positions: pos, contentHeight };
-  }, [items, cols, columnWidth, gap, containerWidth]);
+    const totalHeight = Math.max(0, ...columnHeights) - gap;
+    return { positions: positionedItems, contentHeight: totalHeight };
+  }, [items, columnCount, columnWidth, gap, containerWidth]);
 
-  return { cols, columnWidth, positions, contentHeight };
+  return { columnCount, columnWidth, positions, contentHeight };
 }

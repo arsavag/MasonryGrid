@@ -1,0 +1,14 @@
+.photo {
+    width: 100%;
+    max-width: 1200;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 12;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+.back-link {
+    text-decoration: none;
+    color: #007aff;
+    font-weight: 500;
+    margin-bottom: 16px;
+}

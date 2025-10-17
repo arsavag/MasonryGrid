@@ -6,10 +6,10 @@ import type { IPhoto } from "../../types";
 interface Props {
   photos: IPhoto[];
   gap?: number;
-  targetColWidth?: number;
+  targetColumnWidth?: number;
 }
 
-function MasonryGridFromPhotos({ photos, gap = 12, targetColWidth = 260 }: Props) {
+function MasonryGridFromPhotos({ photos, gap = 12, targetColumnWidth = 260 }: Props) {
   const items = useMemo(
     () =>
       photos.map((p) => ({
@@ -31,7 +31,7 @@ function MasonryGridFromPhotos({ photos, gap = 12, targetColWidth = 260 }: Props
     [photos]
   );
 
-  return <MasonryGrid items={items} gap={gap} targetColWidth={targetColWidth} />;
+  return <MasonryGrid items={items} gap={gap} targetColumnWidth={targetColumnWidth} />;
 }
 
 export default React.memo(MasonryGridFromPhotos);

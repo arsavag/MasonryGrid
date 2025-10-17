@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 export function useScrollVisibility(
   ref: React.RefObject<HTMLElement>,
-  overscan = 600
+  buffer = 600
 ) {
   const [range, setRange] = useState({ top: 0, bottom: 0 });
 
@@ -12,8 +12,8 @@ export function useScrollVisibility(
       if (!el) return;
       const rect = el.getBoundingClientRect();
       setRange({
-        top: Math.max(0, -rect.top - overscan),
-        bottom: Math.max(0, window.innerHeight - rect.top + overscan)
+        top: Math.max(0, -rect.top - buffer),
+        bottom: Math.max(0, window.innerHeight - rect.top + buffer)
       });
     };
 
@@ -21,15 +21,15 @@ export function useScrollVisibility(
     window.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
 
-    const ro = "ResizeObserver" in window ? new ResizeObserver(update) : null;
-    if (ro && ref.current) ro.observe(ref.current);
+    const resizeObserver = "ResizeObserver" in window ? new ResizeObserver(update) : null;
+    if (resizeObserver && ref.current) resizeObserver.observe(ref.current);
 
     return () => {
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
-      if (ro) ro.disconnect();
+      if (resizeObserver) resizeObserver.disconnect();
     };
-  }, [ref, overscan]);
+  }, [ref, buffer]);
 
   return range;
 }

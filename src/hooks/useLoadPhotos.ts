@@ -5,7 +5,7 @@ import type { IPhoto } from "../types";
 export function useLoadPhotos(perPage = 30) {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const [items, setItems] = useState<IPhoto[]>([]);
+  const [photos, setPhotos] = useState<IPhoto[]>([]);
 
   const loadPage = useCallback(
     async (query: string, page: number) => {
@@ -13,7 +13,7 @@ export function useLoadPhotos(perPage = 30) {
       try {
         const res = await getPhotos(query || undefined, page, perPage);
         const photos: IPhoto[] = res.photos ?? [];
-        setItems((prev) => (page === 1 ? photos : prev.concat(photos)));
+        setPhotos((prev) => (page === 1 ? photos : prev.concat(photos)));
         setHasMore(Boolean(res.next_page) && photos.length > 0);
       } catch (e) {
         console.error("Failed to fetch photos:", e);
@@ -25,5 +25,5 @@ export function useLoadPhotos(perPage = 30) {
     [perPage]
   );
 
-  return { items, loading, hasMore, loadPage, setItems };
+  return { photos, loading, hasMore, loadPage, setPhotos };
 }

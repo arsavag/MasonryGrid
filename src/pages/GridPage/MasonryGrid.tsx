@@ -12,13 +12,13 @@ export interface MasonryGridItem {
 interface Props {
   items: MasonryGridItem[];
   gap?: number;
-  targetColWidth?: number;
+  targetColumnWidth?: number;
 }
 
 export default function MasonryGrid({
   items,
   gap = 12,
-  targetColWidth = 260
+  targetColumnWidth = 260
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
@@ -26,35 +26,35 @@ export default function MasonryGrid({
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const ro = new ResizeObserver(() => setWidth(el.clientWidth));
-    ro.observe(el);
+    const resizeObserver = new ResizeObserver(() => setWidth(el.clientWidth));
+    resizeObserver.observe(el);
     setWidth(el.clientWidth);
-    return () => ro.disconnect();
+    return () => resizeObserver.disconnect();
   }, []);
 
   const { positions, contentHeight } = useMasonryLayout({
-    items: items.map((i) => ({ id: i.id, width: i.width, height: i.height })),
+    items: items.map(({id, width, height}) => ({ id, width, height })),
     containerWidth: width,
-    targetColWidth,
+    targetColumnWidth,
     gap
   });
 
-  const range = useScrollVisibility(ref as React.RefObject<HTMLElement>, 800);
+  const visibilityRange = useScrollVisibility(ref as React.RefObject<HTMLElement>, 800);
 
   const visible = useMemo(
-    () => positions.filter((p) => p.y + p.h >= range.top && p.y <= range.bottom),
-    [positions, range]
+    () => positions.filter(({ y, height }) => y + height >= visibilityRange.top && y <= visibilityRange.bottom),
+    [positions, visibilityRange]
   );
 
   return (
     <div ref={ref} style={{ position: "relative", minHeight: contentHeight }}>
-      {visible.map((p) => {
-        const item = items[p.index];
+      {visible.map((position) => {
+        const item = items[position.index];
         const style: React.CSSProperties = {
           position: "absolute",
-          transform: `translate(${p.x}px, ${p.y}px)`,
-          width: p.w,
-          height: p.h
+          transform: `translate(${position.x}px, ${position.y}px)`,
+          width: position.width,
+          height: position.height
         };
         return (
           <Fragment key={item.id}>{item.render(style)}</Fragment>

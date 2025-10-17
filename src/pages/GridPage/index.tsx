@@ -12,7 +12,9 @@ export default function GridPage() {
   const [page, setPage] = useState(1);
   const infiniteTriggerRef = useRef<HTMLDivElement | null>(null);
   
-  const { items: photos, loading, hasMore, loadPage } = useLoadPhotos(PER_PAGE);
+  const { photos, loading, hasMore, loadPage } = useLoadPhotos(PER_PAGE);
+
+  const isEmptyResult = !loading && photos.length === 0;
 
   useEffect(() => {
     setPage(1);
@@ -35,8 +37,9 @@ export default function GridPage() {
           placeholder="Search photos..."
         />
       </header>
-
-      <MasonryGridFromPhotos photos={photos} />
+      {isEmptyResult ? (<p className="no-results">No results found.</p>) : (
+        <MasonryGridFromPhotos photos={photos} />
+      )}
       <div ref={infiniteTriggerRef} style={{ height: 1 }} />
       {loading && <p className="loading">Loading...</p>}
     </div>
