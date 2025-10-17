@@ -5,7 +5,7 @@ import PhotoPage from "./pages/PhotoPage";
 
 export const router = createBrowserRouter([
 	{
-		path: "/",
+		path: "/MasonryGrid",
 		element: <RouteBoundary />,
 		children: [
 			{ index: true, element: <GridPage /> },

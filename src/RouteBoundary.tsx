@@ -12,13 +12,6 @@ export default function RouteBoundary({ fallback }: Props) {
   return (
     <ErrorBoundary
       key={location.key}
-      fallback={
-        fallback ?? (
-          <div style={{ padding: 24 }}>
-            Something went wrong in this section. Try refreshing or navigate back.
-          </div>
-        )
-      }
     >
       <Outlet />
     </ErrorBoundary>
