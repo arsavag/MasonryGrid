@@ -1,16 +1,45 @@
-# React + Vite
+# MasonryGrid
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small React + Vite project that displays photos in a masonry-style grid with infinite scroll.
 
-Currently, two official plugins are available:
+## Features
+- Masonry-style photo grid
+- Infinite scroll
+- Debounced search
+- Route-level ErrorBoundary to isolate route render errors
+- Simple, testable layout
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Quick start (macOS / Linux)
+1. Install dependencies
+```bash
+npm install
+```
 
-## React Compiler
+2. Run development server
+```bash
+npm run dev
+# open http://localhost:5173 (port shown by Vite)
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+3. Build & preview
+```bash
+npm run build
+npm run preview
+```
 
-## Expanding the ESLint configuration
+## Scripts
+- `npm run dev` — start dev server with HMR
+- `npm run build` — produce production build
+- `npm run preview` — preview production build locally
+- `npm run lint` — run ESLint
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+(If your repo contains a `deploy` script, use it to publish. Otherwise configure your CI/CD or hosting service.)
+
+## Project structure
+- src/
+  - pages/ — route pages (GridPage, PhotoPage, etc.)
+  - hooks/ — custom hooks (loading, infinite scroll)
+  - components/ — reusable components (masonry items)
+  - ErrorBoundary.tsx — typed error boundary used across app
+  - RouteBoundary.tsx — single boundary that wraps all routes (remounts on navigation)
+  - main.tsx / App.tsx — app entry and router setup

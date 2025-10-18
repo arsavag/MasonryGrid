@@ -11,6 +11,7 @@ export default function RouteBoundary({ fallback }: Props) {
 
   return (
     <ErrorBoundary
+      fallback={fallback}
       key={location.key}
     >
       <Outlet />
